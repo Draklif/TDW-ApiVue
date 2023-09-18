@@ -5,29 +5,36 @@ import axios from 'axios'
 
 const products = ref<Product[]>([])
 
-onMounted(async () => { 
+onMounted(async () => {
   try {
     const { data } = await axios.get('https://fakestoreapi.com/products')
     products.value = data
-  } catch(error) {
-    console.error(error);
+  } catch (error) {
+    console.error(error)
   }
 })
 </script>
 
 <template>
-    <section class="container">
-        <router-link  v-for="product in products" :key="product.id" :to="`products/${product.id}`" class="product-card">
-            <div class="product-image">
-                <img :src="product.image" alt="Producto" />
-            </div>
-            <div class="product-details">
-                <h2>{{ product.title }}</h2>
-                <span class="price">$ {{ product.price }}</span><br />
-                <span class="rating">⭐ {{ product.rating.rate }}</span><span class="votes"> ({{ product.rating.count }} votos)</span>
-            </div>
-        </router-link>
-    </section>
+  <section class="container">
+    <router-link
+      v-for="product in products"
+      :key="product.id"
+      :to="`products/${product.id}`"
+      class="product-card"
+    >
+      <div class="product-image">
+        <img :src="product.image" alt="Producto" />
+      </div>
+      <div class="product-details">
+        <h2>{{ product.title }}</h2>
+        <span class="price">$ {{ product.price }}</span
+        ><br />
+        <span class="rating">⭐ {{ product.rating.rate }}</span
+        ><span class="votes"> ({{ product.rating.count }} votos)</span>
+      </div>
+    </router-link>
+  </section>
 </template>
 
 <style scoped>
@@ -35,7 +42,7 @@ onMounted(async () => {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 32px
+  gap: 32px;
 }
 
 .product-card {
@@ -85,6 +92,6 @@ onMounted(async () => {
 
 .product-details .votes {
   font-size: small;
-  color: rgb(114, 114, 114)
+  color: rgb(114, 114, 114);
 }
 </style>

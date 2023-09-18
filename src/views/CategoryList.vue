@@ -9,14 +9,14 @@ onMounted(async () => {
     const { data } = await axios.get<[]>('https://fakestoreapi.com/products/categories')
     categories.value = data
   } catch (error) {
-    console.error(error);
+    console.error(error)
   }
 })
 </script>
 
 <template>
   <main>
-    <br>
+    <br />
     <ul>
       <li v-for="(category, index) in categories" :key="index">
         <router-link :to="`products/category/${encodeURI(category)}`" class="product-card">

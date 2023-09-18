@@ -7,12 +7,12 @@ import axios from 'axios'
 
 const products = ref<Product[]>([])
 
-onMounted(async () => { 
+onMounted(async () => {
   try {
     const { data } = await axios.get('https://fakestoreapi.com/products')
     products.value = data
-  } catch(error) {
-    console.error(error);
+  } catch (error) {
+    console.error(error)
   }
 })
 </script>
@@ -25,8 +25,8 @@ onMounted(async () => {
 
     <ButtonComponent />
 
-    <br>
-    
+    <br />
+
     <ProductComponent />
   </div>
 </template>

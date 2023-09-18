@@ -1,19 +1,19 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import { type Product } from '../interfaces/product'
-import { useRoute } from 'vue-router';
+import { useRoute } from 'vue-router'
 import axios from 'axios'
 
 const product = ref<Product>()
 const route = useRoute()
 
-onMounted(async () => { 
+onMounted(async () => {
   const productId = route.params.id
   try {
     const { data } = await axios.get(`https://fakestoreapi.com/products/${productId}`)
     product.value = data
   } catch (error) {
-    console.error(error);
+    console.error(error)
   }
 })
 </script>
@@ -28,11 +28,15 @@ onMounted(async () => {
       </div>
       <div class="product-details">
         <h2>Detalles del producto:</h2>
-        <router-link :to="`/products/category/${encodeURI(product.category.toString())}`">{{ product.category.toString().toUpperCase() }}</router-link>
+        <router-link :to="`/products/category/${encodeURI(product.category.toString())}`">{{
+          product.category.toString().toUpperCase()
+        }}</router-link>
         <p>{{ product.description }}</p>
-        <br>
-        <span class="price">$ {{ product.price }}</span><br />
-        <span class="rating">⭐ {{ product.rating.rate }}</span><span class="votes"> ({{ product.rating.count }} votos)</span>
+        <br />
+        <span class="price">$ {{ product.price }}</span
+        ><br />
+        <span class="rating">⭐ {{ product.rating.rate }}</span
+        ><span class="votes"> ({{ product.rating.count }} votos)</span>
       </div>
     </div>
     <div v-else>
@@ -42,7 +46,6 @@ onMounted(async () => {
 </template>
 
 <style scoped>
-
 .back-button {
   font-size: large;
   font-weight: bold;
@@ -79,6 +82,6 @@ onMounted(async () => {
 
 .product-details .votes {
   font-size: small;
-  color: rgb(114, 114, 114)
+  color: rgb(114, 114, 114);
 }
 </style>

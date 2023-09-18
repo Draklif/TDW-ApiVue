@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import { type Product } from '../interfaces/product'
-import { useRoute } from 'vue-router';
+import { useRoute } from 'vue-router'
 import ButtonComponent from '../components/ButtonComponent.vue'
 import axios from 'axios'
 
@@ -9,13 +9,13 @@ const products = ref<Product[]>([])
 const category = ref()
 const route = useRoute()
 
-onMounted(async () => { 
+onMounted(async () => {
   category.value = route.params.category
   try {
     const { data } = await axios.get(`https://fakestoreapi.com/products/category/${category.value}`)
     products.value = data
   } catch (error) {
-    console.error(error);
+    console.error(error)
   }
 })
 </script>
@@ -30,17 +30,24 @@ onMounted(async () => {
       <ButtonComponent />
     </section>
 
-    <br>
+    <br />
 
     <section class="container">
-      <router-link  v-for="product in products" :key="product.id" :to="`/products/${product.id}`" class="product-card">
+      <router-link
+        v-for="product in products"
+        :key="product.id"
+        :to="`/products/${product.id}`"
+        class="product-card"
+      >
         <div class="product-image">
           <img :src="product.image" alt="Producto" />
         </div>
         <div class="product-details">
           <h2>{{ product.title }}</h2>
-          <span class="price">$ {{ product.price }}</span><br />
-          <span class="rating">⭐ {{ product.rating.rate }}</span><span class="votes"> ({{ product.rating.count }} votos)</span>
+          <span class="price">$ {{ product.price }}</span
+          ><br />
+          <span class="rating">⭐ {{ product.rating.rate }}</span
+          ><span class="votes"> ({{ product.rating.count }} votos)</span>
         </div>
       </router-link>
     </section>
@@ -51,7 +58,6 @@ onMounted(async () => {
 header {
   display: flex;
   justify-content: center;
-  
 }
 
 header h1 {
@@ -65,7 +71,7 @@ header h1 {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 32px
+  gap: 32px;
 }
 
 .product-card {
@@ -115,6 +121,6 @@ header h1 {
 
 .product-details .votes {
   font-size: small;
-  color: rgb(114, 114, 114)
+  color: rgb(114, 114, 114);
 }
 </style>

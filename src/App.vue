@@ -11,17 +11,16 @@ onMounted(async () => {
     const { data } = await axios.get('https://fakestoreapi.com/products')
     products.value = data
   } catch (error) {
-    console.error(error);
+    console.error(error)
   }
 })
 </script>
 
 <template>
   <router-link to="/products">Ver todos los productos</router-link>
-  <br>
+  <br />
   <router-link to="/categories">Ver todas las categorías</router-link>
   <router-view></router-view>
 </template>
 
-<style scoped>
-</style>
+<style scoped></style>
