@@ -27,7 +27,7 @@ onMounted(async () => {
 
     <br />
 
-    <ProductComponent />
+    <ProductComponent :products="products" />
   </div>
 </template>
 

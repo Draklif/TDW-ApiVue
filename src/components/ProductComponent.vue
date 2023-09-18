@@ -1,18 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
-import { type Product } from '../interfaces/product'
-import axios from 'axios'
-
-const products = ref<Product[]>([])
-
-onMounted(async () => {
-  try {
-    const { data } = await axios.get('https://fakestoreapi.com/products')
-    products.value = data
-  } catch (error) {
-    console.error(error)
-  }
-})
+const { products } = defineProps(['products'])
 </script>
 
 <template>
@@ -20,7 +7,7 @@ onMounted(async () => {
     <router-link
       v-for="product in products"
       :key="product.id"
-      :to="`products/${product.id}`"
+      :to="`/products/${product.id}`"
       class="product-card"
     >
       <div class="product-image">

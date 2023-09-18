@@ -19,7 +19,7 @@ onMounted(async () => {
   }
 })
 
-const create = () => {
+const createProduct = () => {
   Swal.fire({
     title: 'Ingrese el nombre de su producto',
     input: 'text',
@@ -108,7 +108,7 @@ const create = () => {
               footer: 'Pero ningún valor se ha insertado en realidad en la BD.',
               width: '50%'
             })
-            console.log(result.value)
+            console.log('Creado' + result.value)
           })
         })
       })
@@ -119,7 +119,7 @@ const create = () => {
 
 <template>
   <section class="container">
-    <button type="button" @click="create">+ Crear Producto</button>
+    <button type="button" @click="createProduct">+ Crear Producto</button>
   </section>
 </template>
 

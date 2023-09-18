@@ -3,14 +3,14 @@ import { ref, onMounted } from 'vue'
 import { type Product } from '../interfaces/product'
 import { useRoute } from 'vue-router'
 import ButtonComponent from '../components/ButtonComponent.vue'
+import ProductComponent from '../components/ProductComponent.vue'
 import axios from 'axios'
 
 const products = ref<Product[]>([])
-const category = ref()
 const route = useRoute()
+const category = ref(route.params.category)
 
 onMounted(async () => {
-  category.value = route.params.category
   try {
     const { data } = await axios.get(`https://fakestoreapi.com/products/category/${category.value}`)
     products.value = data
@@ -23,50 +23,37 @@ onMounted(async () => {
 <template>
   <div>
     <header>
-      <h1>Catálogo - {{ category }}</h1>
+      <h1>Catálogo</h1>
+      <h2>{{ category.toString().charAt(0).toUpperCase() + category.toString().slice(1) }}</h2>
     </header>
 
-    <section class="container">
-      <ButtonComponent />
-    </section>
+    <ButtonComponent />
 
     <br />
 
-    <section class="container">
-      <router-link
-        v-for="product in products"
-        :key="product.id"
-        :to="`/products/${product.id}`"
-        class="product-card"
-      >
-        <div class="product-image">
-          <img :src="product.image" alt="Producto" />
-        </div>
-        <div class="product-details">
-          <h2>{{ product.title }}</h2>
-          <span class="price">$ {{ product.price }}</span
-          ><br />
-          <span class="rating">⭐ {{ product.rating.rate }}</span
-          ><span class="votes"> ({{ product.rating.count }} votos)</span>
-        </div>
-      </router-link>
-    </section>
+    <ProductComponent :products="products" />
   </div>
 </template>
 
 <style scoped>
 header {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
 }
 
 header h1 {
   color: black;
   background-color: #ffffff;
-  margin: 24px;
+  margin-top: 24px;
   padding: 8px 48px;
   border-radius: 32px;
 }
+
+header h2 {
+  margin-bottom: 24px;
+}
+
 .container {
   display: flex;
   flex-wrap: wrap;
