@@ -1,15 +1,17 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
-import { useRoute } from 'vue-router';
 import axios from 'axios'
 
 const categories = ref<[]>([])
 
 onMounted(async () => {
-  const { data } = await axios.get<[]>('https://fakestoreapi.com/products/categories')
-  categories.value = data
+  try {
+    const { data } = await axios.get<[]>('https://fakestoreapi.com/products/categories')
+    categories.value = data
+  } catch (error) {
+    console.error(error);
+  }
 })
-
 </script>
 
 <template>

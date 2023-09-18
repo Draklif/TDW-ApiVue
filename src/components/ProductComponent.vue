@@ -1,66 +1,36 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import { type Product } from '../interfaces/product'
-import { useRoute } from 'vue-router';
-import ButtonComponent from '../components/ButtonComponent.vue'
 import axios from 'axios'
 
 const products = ref<Product[]>([])
-const category = ref()
-const route = useRoute()
 
 onMounted(async () => { 
-  category.value = route.params.category
   try {
-    const { data } = await axios.get(`https://fakestoreapi.com/products/category/${category.value}`)
+    const { data } = await axios.get('https://fakestoreapi.com/products')
     products.value = data
-  } catch (error) {
+  } catch(error) {
     console.error(error);
   }
 })
 </script>
 
 <template>
-  <div>
-    <header>
-      <h1>Catálogo - {{ category }}</h1>
-    </header>
-
     <section class="container">
-      <ButtonComponent />
+        <router-link  v-for="product in products" :key="product.id" :to="`products/${product.id}`" class="product-card">
+            <div class="product-image">
+                <img :src="product.image" alt="Producto" />
+            </div>
+            <div class="product-details">
+                <h2>{{ product.title }}</h2>
+                <span class="price">$ {{ product.price }}</span><br />
+                <span class="rating">⭐ {{ product.rating.rate }}</span><span class="votes"> ({{ product.rating.count }} votos)</span>
+            </div>
+        </router-link>
     </section>
-
-    <br>
-
-    <section class="container">
-      <router-link  v-for="product in products" :key="product.id" :to="`/products/${product.id}`" class="product-card">
-        <div class="product-image">
-          <img :src="product.image" alt="Producto" />
-        </div>
-        <div class="product-details">
-          <h2>{{ product.title }}</h2>
-          <span class="price">$ {{ product.price }}</span><br />
-          <span class="rating">⭐ {{ product.rating.rate }}</span><span class="votes"> ({{ product.rating.count }} votos)</span>
-        </div>
-      </router-link>
-    </section>
-  </div>
 </template>
 
 <style scoped>
-header {
-  display: flex;
-  justify-content: center;
-  
-}
-
-header h1 {
-  color: black;
-  background-color: #ffffff;
-  margin: 24px;
-  padding: 8px 48px;
-  border-radius: 32px;
-}
 .container {
   display: flex;
   flex-wrap: wrap;

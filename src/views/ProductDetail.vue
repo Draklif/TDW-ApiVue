@@ -28,6 +28,7 @@ onMounted(async () => {
       </div>
       <div class="product-details">
         <h2>Detalles del producto:</h2>
+        <router-link :to="`/products/category/${encodeURI(product.category.toString())}`">{{ product.category.toString().toUpperCase() }}</router-link>
         <p>{{ product.description }}</p>
         <br>
         <span class="price">$ {{ product.price }}</span><br />

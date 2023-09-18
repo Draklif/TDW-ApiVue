@@ -10,3 +10,11 @@ export interface Product {
         rate: number
     }
 }
+
+export interface NewProduct {
+    category?: number,
+    title?: string,
+    description?: string,
+    image?: string,
+    price?: number,
+}
