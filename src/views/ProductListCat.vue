@@ -12,7 +12,11 @@ const category = ref(route.params.category)
 
 onMounted(async () => {
   try {
-    const { data } = await axios.get(`https://fakestoreapi.com/products/category/${category.value}`)
+    const { data } = await axios.get(`https://fakestoreapi.com/products/category/${category.value}`, {
+      headers: {
+        'Authorization': `${localStorage.getItem('token')}`
+      }
+    })
     products.value = data
   } catch (error) {
     console.error(error)

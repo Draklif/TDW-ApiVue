@@ -9,7 +9,11 @@ const products = ref<Product[]>([])
 
 onMounted(async () => {
   try {
-    const { data } = await axios.get('https://fakestoreapi.com/products')
+    const { data } = await axios.get('https://fakestoreapi.com/products', {
+      headers: {
+        'Authorization': `${localStorage.getItem('token')}`
+      }
+    })
     products.value = data
   } catch (error) {
     console.error(error)

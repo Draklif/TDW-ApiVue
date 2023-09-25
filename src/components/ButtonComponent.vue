@@ -10,7 +10,11 @@ let categories: any = {}
 
 onMounted(async () => {
   try {
-    const { data } = await axios.get<string[]>('https://fakestoreapi.com/products/categories')
+    const { data } = await axios.get<string[]>('https://fakestoreapi.com/products/categories', {
+      headers: {
+        'Authorization': `${localStorage.getItem('token')}`
+      }
+    })
     for (const category of data) {
       categories[category] = category.toUpperCase()
     }
@@ -86,7 +90,11 @@ const createProduct = () => {
             preConfirm: (userInput) => {
               newProduct.value.category = userInput
               return axios
-                .post('https://fakestoreapi.com/products', newProduct.value)
+                .post('https://fakestoreapi.com/products', newProduct.value, {
+                  headers: {
+                    'Authorization': `${localStorage.getItem('token')}`
+                  }
+                })
                 .then((response) => {
                   if (response.status !== 200) throw new Error(response.statusText)
                   return response.data
@@ -108,7 +116,7 @@ const createProduct = () => {
               footer: 'Pero ningún valor se ha insertado en realidad en la BD.',
               width: '50%'
             })
-            console.log('Creado' + result.value)
+            console.log(result.value)
           })
         })
       })

@@ -6,7 +6,11 @@ const categories: any = ref<[]>([])
 
 onMounted(async () => {
   try {
-    const { data } = await axios.get<[]>('https://fakestoreapi.com/products/categories')
+    const { data } = await axios.get<[]>('https://fakestoreapi.com/products/categories', {
+      headers: {
+        'Authorization': `${localStorage.getItem('token')}`
+      }
+    })
     categories.value = data
   } catch (error) {
     console.error(error)

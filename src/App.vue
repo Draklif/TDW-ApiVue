@@ -16,7 +16,16 @@ const login = async () => {
     })
     localStorage.setItem('token', data.token)
     session.value = true
-    
+    Swal.fire({
+      icon: 'success',
+      text: `¡Bienvenido ${username.value}!`,
+      toast: true, 
+      timer: 4000,
+      timerProgressBar: true,
+      width: '50%',
+      showConfirmButton: false,
+      position: 'top'
+    })
     router.push({ path: '/products' })
   } catch (error) {
     const err: AxiosError = error as AxiosError

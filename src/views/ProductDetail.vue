@@ -28,7 +28,11 @@ const deleteProduct = async () => {
       showLoaderOnConfirm: true,
       preConfirm: () => {
         return axios
-          .delete(`https://fakestoreapi.com/products/${productId}`)
+          .delete(`https://fakestoreapi.com/products/${productId}`, {
+            headers: {
+              'Authorization': `${localStorage.getItem('token')}`
+            }
+          })
           .then((response) => {
             if (response.status !== 200) throw new Error(response.statusText)
             return response.data
@@ -50,7 +54,7 @@ const deleteProduct = async () => {
         footer: 'Pero ningún valor se ha modificado en realidad en la BD.',
         width: '50%'
       })
-      console.log('Eliminado' + result.value)
+      console.log(result.value)
       router.push({ path: '/products' })
     })
   } catch (error) {
@@ -125,7 +129,11 @@ const modifyProduct = () => {
             preConfirm: (userInput) => {
               newProduct.value.category = userInput
               return axios
-                .put(`https://fakestoreapi.com/products/${productId}`, newProduct.value)
+                .put(`https://fakestoreapi.com/products/${productId}`, newProduct.value, {
+                  headers: {
+                    'Authorization': `${localStorage.getItem('token')}`
+                  }
+                })
                 .then((response) => {
                   if (response.status !== 200) throw new Error(response.statusText)
                   return response.data
@@ -147,7 +155,7 @@ const modifyProduct = () => {
               footer: 'Pero ningún valor se ha modificado en realidad en la BD.',
               width: '50%'
             })
-            console.log('Modificado' + result.value)
+            console.log(result.value)
             router.push({ path: '/products' })
           })
         })
@@ -158,10 +166,18 @@ const modifyProduct = () => {
 
 onMounted(async () => {
   try {
-    const productList = await axios.get(`https://fakestoreapi.com/products/${productId}`)
+    const productList = await axios.get(`https://fakestoreapi.com/products/${productId}`, {
+      headers: {
+        'Authorization': `${localStorage.getItem('token')}`
+      }
+    })
     product.value = productList.data
 
-    let categoryList = await axios.get<string[]>('https://fakestoreapi.com/products/categories')
+    let categoryList = await axios.get<string[]>('https://fakestoreapi.com/products/categories', {
+      headers: {
+        'Authorization': `${localStorage.getItem('token')}`
+      }
+    })
     for (const category of categoryList.data) {
       categories[category] = category.toUpperCase()
     }
